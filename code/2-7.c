@@ -8,10 +8,31 @@ typedef struct config {
     char SectionName[64];
     unsigned long long Address;
 } Config;
-
 void config_parser(Config* config_ptr) {
+    FILE* fp = fopen("config.txt", "r");
+    if (fp == NULL) return;
 
+    char line[128];
+    char key[64];
+    char val[64];
+
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        sscanf(line, "%[^=]=%s", key, val);
+        
+        if (strcmp(key, "InputFileName") == 0) {
+            strcpy(config_ptr->InputFileName, val);
+        } else if (strcmp(key, "Options") == 0) {
+            config_ptr->Options = atoi(val);
+        } else if (strcmp(key, "SectionName") == 0) {
+            strcpy(config_ptr->SectionName, val);
+        } else if (strcmp(key, "Address") == 0) {
+            config_ptr->Address = strtoull(val, NULL, 16);
+        }
+    }
+    fclose(fp);
 }
+
+
 
 int main(int argc, const char* argv[]) {
     Config config;
