@@ -7,6 +7,17 @@ int main(int argc, const char* argv[]) {
     if (fp == NULL) {
         return 0;
     }
+    int sum = 0;
+    char buf[100];
+    int num;
+
+    while (fgets(buf, sizeof(buf), fp) != NULL) {
+       if (sscanf(buf, "%d", &num) == 1) {
+           sum += num;
+       }else {
+           fprintf(stderr, "invalid input %s", buf);
+       }
+   }
 
 
     int sum = 0;
