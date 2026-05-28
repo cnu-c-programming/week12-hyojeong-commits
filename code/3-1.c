@@ -8,6 +8,6 @@ int main(int argc, const char* argv[]) {
     if (fp==NULL) {
         perror("file does not exists");
         return 1;
-
+    }
     return 0;
 }
